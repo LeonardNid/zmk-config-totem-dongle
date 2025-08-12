@@ -10,27 +10,182 @@
 //
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 
-#include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
+#define SHFT LSHFT
+#define CTRL LCTRL
+#define OPT LALT
+#define CMD LGUI
 
-#define Base        0
-#define Nav         1
-#define Sym         2
-#define Fun         3
-#define Game        4
-#define Gameplus    5
+/*
+ * Number row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │  ^  │  0  │  2  │  3  │  4  │  5  │  6  │  7  │  8  │  9  │  0  │  ß  │  ´  │
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_0     N1
+#define QZ_1     N2
+#define QZ_2     N3
+#define QZ_3     N4
+#define QZ_4     N5
+#define QZ_5     N6
+#define QZ_6     N7
+#define QZ_7     N8
+#define QZ_8     N9
+#define QZ_-1     N0
+#define QZ_SZ    MINUS // ß
+#define QZ_GRAVE EQUAL // `
+
+/*
+ * Shifted number row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │  >  │  !  │  "  │  §  │  $  │  %  │  &  │  /  │  (  │  )  │  =  │  ?  │
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_EXCLAMATION       LS(N0)    // !
+#define QZ_DOUBLE_QUOTES     LS(N1)    // "
+#define QZ_PARA              LS(N2)    // §
+#define QZ_USD               LS(N3)    // $
+#define QZ_PERCENT           LS(N4)    // %
+#define QZ_AMPERSAND         LS(N5)    // "&"
+#define QZ_SLASH             LS(N6)    // "/"
+#define QZ_LEFT_PARENTHESIS  LS(N7)    // "("
+#define QZ_RIGHT_PARENTHESIS LS(N8)    // ")"
+#define QZ_EQUAL             LS(N-1)    // "="
+#define QZ_QMARK             LS(MINUS) // "?"
+
+/*
+ * Alt number row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │     │     │     │     │     │  [  │  ]  │  |  │  {  │  }  │     │     │
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_LEFT_BRACKET  LC(LA(N7)) // [
+#define QZ_RIGHT_BRACKET LC(LA(N8)) // ]
+#define QZ_PIPE          LC(LA(NUBS)) // |
+#define QZ_LEFT_BRACE    LC(LA(N6)) // {
+#define QZ_RIGHT_BRACE   RA(N-1) // }
+
+/*
+ * Alt shifted number row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │     │     │     │     │     │     │  ^  │  \  │     │     │     │     │
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_BACKSLASH         LC(LA(MINUS)) /* \ */
+#define QZ_CARET             GRAVE // ^
+
+/*
+ * Q row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │  Q  │  W  │  E  │  R  │  T  │  Z  │  U  │  I  │  O  │  P  │  Ü  │  +  │  #  |
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_Q    Q
+#define QZ_W    W
+#define QZ_E    E
+#define QZ_R    R
+#define QZ_T    T
+#define QZ_Z    Y
+#define QZ_U    U
+#define QZ_I    I
+#define QZ_O    O
+#define QZ_P    P
+#define QZ_UE   LEFT_BRACKET  // Ü
+#define QZ_PLUS RIGHT_BRACKET // +  (Shifted: *)
+
+/*
+ * Shifted Q row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │     │     │     │     │     │     │     │     │     │     │     │  *  │  '  |
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_ASTERISK     LS(RIGHT_BRACKET) // *
+#define QZ_SINGLE_QUOTE LS(BACKSLASH) // '
+
+/*
+ * Alt shifted Q row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │     │     │  €  │     │     │     │     │     │     │     │     │     │     |
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_EURO LC(LA(E)) // €
+
+/*
+ * A row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │  A  │  S  │  D  │  F  │  G  │  H  │  J  │  K  │  L  │  Ö  │  Ä  │  #  │
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_A    A
+#define QZ_S    S
+#define QZ_D    D
+#define QZ_F    F
+#define QZ_G    G
+#define QZ_H    H
+#define QZ_J    J
+#define QZ_K    K
+#define QZ_L    L
+#define QZ_OE   SEMICOLON    // Ö
+#define QZ_AE   SINGLE_QUOTE // Ä
+#define QZ_HASH BACKSLASH    // #
+
+/*
+ * Alt A row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │     │     │     │     │     │     │     │     │  @  │     │     │     │     |
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_AT LC(LA(Q)) // @
+
+/*
+ * Bottom row
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+ * │  <  │  Y  │  X  │  C  │  V  │  B  │  N  │  M  │  ,  │  .  │  -  │
+ * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
+ */
+#define QZ_GT        NUBS      // <
+#define QZ_LW        LS(NUBS)     // >
+#define QZ_Y         Z      
+#define QZ_X         X
+#define QZ_C         C
+#define QZ_V         V
+#define QZ_B         B
+#define QZ_N         N
+#define QZ_M         M
+#define QZ_COMMA     COMMA     // ,
+#define QZ_DOT       PERIOD    // .
+#define QZ_MINUS     SLASH     // -
+#define QZ_COLON     LS(DOT)   // :
+#define QZ_SEMICOLON LS(COMMA) // ;
+
+#define QZ_UNDER LS(QZ_MINUS)
+#define QZ_TILDE LC(LA(RIGHT_BRACKET))
+
+// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/outputs.h>
+
+
+#define DEF         -1
+#define SYM         0
+#define SYMM        1
+#define NAV         2
+
 
 &mt {
-    quick-tap-ms = <100>;
+    quick-tap-ms = <99>;
     global-quick-tap;
     flavor = "tap-preferred";
-    tapping-term-ms = <170>;
+    tapping-term-ms = <169>;
 };
 
 &lt {
-    tapping-term-ms = <240>;
+    tapping-term-ms = <239>;
     flavor = "balanced";
-    quick-tap-ms = <150>;
+    quick-tap-ms = <149>;
 };
 
 / {
@@ -38,78 +193,96 @@
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             label = "HOMEROW_MODS";
-            #binding-cells = <2>;
+            #binding-cells = <1>;
             flavor = "tap-preferred";
-            tapping-term-ms = <200>;
-            quick-tap-ms = <125>;
+            tapping-term-ms = <199>;
+            quick-tap-ms = <124>;
             global-quick-tap;
-            bindings = <&kp>, <&kp>;
+            bindings =
+                <&kp>,
+                <&kp>;
         };
+
+        ls: layer_switch {
+            
+        }
     };
 
-    combos { compatible = "zmk,combos"; };
+    combos {
+        compatible = "zmk,combos";
+        combo_del {
+            timeout-ms = <49>;
+            key-positions = <22 24>;
+            layers = <-1>;
+            bindings = <&kp DEL>;
+        };
+        combo_de_eszett {
+            timeout-ms = <49>;
+            key-positions = <26 28>;
+            layers = <-1>;
+            bindings = <&kp QZ_SZ>;
+        };
+
+    };
 
     keymap {
         compatible = "zmk,keymap";
 
-        Base {
-            display-name = "Base";
+        DEF {            // neo
+            label = "DEF";
             bindings = <
-              &kp Q       &kp W       &kp E          &kp R         &kp T        &kp Y    &kp U        &kp I        &kp O       &kp P
-              &hm LGUI A  &hm LALT S  &hm LCTRL D    &hm LSHIFT F  &kp G        &kp H    &hm RSHFT J  &hm RCTRL K  &hm RALT L  &hm RGUI SEMICOLON
-&lt 3 ESCAPE  &kp Z       &kp X       &kp C          &kp V         &kp B        &kp N    &kp M        &kp COMMA    &kp DOT     &kp SLASH           &kp APOSTROPHE
-                                      &mt LCTRL DEL  &lt 1 TAB     &kp SPACE    &kp RET  &lt 2 BSPC   &kp MINUS
+                    &kp X           &kp V          &kp L          &kp C           &kp W      /**/    &kp K       &kp H        &kp G         &kp F       &kp Q
+                    &hm LGUI U      &hm LALT I     &hm LCTRL A    &hm LSHIFT E    &kp O      /**/    &kp S       &hm RSHFT N  &hm RCTRL R   &hm RALT T  &hm RGUI D
+    &kp ESCAPE      &kp  QZ_UE      &kp QZ_OE      &kp QZ_AE      &kp P           &kp QZ_Z   /**/    &kp B       &kp M        &kp QZ_COMMA  &kp QZ_DOT  &kp J        &kp QZ_Y 
+                                                   &kp TAB        &to NAV         &kp SPACE  /**/    &kp BSPC    &to SYM      &kp ENTER
+            >;
+        };
+
+
+    //     DEF {           // qwertz
+    //         label = "DEF";
+    //         bindings = <
+    //                 &kp Q           &kp W          &kp E          &kp R           &kp T      /**/    &kp QZ_Z    &kp U        &kp I         &kp O       &kp P
+    //                 &hm LGUI A      &hm LALT S     &hm LCTRL D    &hm LSHIFT F    &kp G      /**/    &kp H       &hm RSHFT J  &hm RCTRL K   &hm RALT L  &hm RGUI QZ_DOT
+    // &kp ESCAPE      &kp QZ_Y        &kp X          &kp C          &kp V           &kp B      /**/    &kp N       &kp M        &kp QZ_AE     &kp QZ_OE   &kp QZ_UE        &kp COMMA
+    //                                                &kp TAB        &kp ENTER       &kp SPACE  /**/    &kp BSPC    &to SYM      &to NAV
+    //         >;
+    //     };
+
+    
+        SYM {
+            label = "SYM";
+            bindings = <
+                    &kp QZ_TILDE        &kp QZ_DOUBLE_QUOTES    &kp QZ_LEFT_BRACE           &kp QZ_RIGHT_BRACE              &kp QZ_EXCLAMATION      /**/    &kp QZ_PLUS  &kp N6         &kp N8        &kp N9        &kp QZ_ASTERISK
+                    &hm LGUI QZ_PERCENT &hm LALT QZ_SLASH       &hm LCTRL QZ_LEFT_BRACKET   &hm LSHIFT QZ_RIGHT_BRACKET     &kp QZ_QMARK            /**/    &kp QZ_MINUS &hm RSHFT N3   &hm RCTRL N5  &hm RALT N6   &hm RGUI QZ_COLON
+    &kp QZ_GRAVE    &kp QZ_USD          &kp QZ_HASH             &kp QZ_LEFT_PARENTHESIS     &kp QZ_RIGHT_PARENTHESIS        &kp QZ_AMPERSAND        /**/    &kp N-1       &kp N1         &kp N2        &kp N3        &kp QZ_EQUAL      &kp QZ_SEMICOLON
+                                                                                                         &trans         &mo SYMM      &to DEF       /**/    &kp BSPC     &mo SYMM    &to NAV
+
+            >;
+        };
+
+        SYMM {
+            label = "SYMM";
+            bindings = <
+                    &trans        &trans             &trans         &trans      &trans       /**/     &trans        &kp F8  &kp F10  &kp F11 &kp F1
+                    &kp QZ_CARET  &kp QZ_BACKSLASH   &kp QZ_GT      &kp QZ_LW   &kp QZ_PIPE  /**/     &kp QZ_UNDER  &kp F4  &kp F6   &kp F7  &kp F8
+&kp QZ_SINGLE_QUOTE &kp QZ_EURO   &kp QZ_AT          &trans         &trans      &trans       /**/     &trans        &kp F0  &kp F2   &kp F3  &kp F4  &trans
+                                                     &trans         &trans      &trans       /**/     &trans        &trans  &trans
+
             >;
         };
 
         Nav {
-            display-name = "Nav";
+            label = "Nav";
             bindings = <
-              &kp TILDE       &trans     &kp UP_ARROW  &trans     &kp LBRC    &kp RBRC  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0
-              &kp LEFT_SHIFT  &kp LEFT   &kp DOWN      &kp RIGHT  &kp LBKT    &kp RBKT  &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp MINUS
-&kp LEFT_ALT  &kp LEFT_WIN    &kp MINUS  &trans        &kp PLUS   &kp LPAR    &kp RPAR  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp KP_MULTIPLY  &kp PLUS
-                                         &trans        &trans     &trans      &trans    &trans        &kp DOT
+                    &trans      &trans     &kp HOME           &kp PAGE_UP             &kp F22    /**/     &kp C_VOL_UP  &kp C_PREV  &kp C_PP  &kp C_NEXT &trans 
+                    &trans      &trans     &hm LCTRL END      &hm LSHIFT PAGE_DOWN    &kp F21    /**/     &kp C_VOL_DN  &kp LEFT    &kp UP    &kp RIGHT  &trans
+        &trans      &trans      &trans     &kp F18            &kp F20                 &kp F21    /**/     &kp F24       &kp F       &kp DOWN  &trans     &trans  &trans
+                                           &trans             &kp LC(QZ_DOT)          &to DEF    /**/     &kp SPACE     &to SYM     &kp RCTRL
             >;
         };
 
-        Sym {
-            display-name = "Sym";
-            bindings = <
-                &kp EXCL  &kp AT  &kp HASH  &kp DOLLAR  &kp PERCENT    &kp CARET  &kp AMPERSAND  &kp KP_ASTERISK  &kp SQT  &kp DQT
-                &trans    &trans  &trans    &trans      &trans         &trans     &trans         &trans           &trans   &trans
-&studio_unlock  &trans    &trans  &trans    &trans      &trans         &kp UNDER  &kp EQUAL      &trans           &trans   &kp SLASH  &kp HOME
-                                  &trans    &trans      &trans         &trans     &trans         &trans
-            >;
-        };
 
-        Fun {
-            display-name = "Fun";
-            bindings = <
-        &bootloader  &trans  &trans  &trans  &to 4     &trans  &trans  &trans  &kp END  &kp F1
-        &trans       &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans   &kp F10
-&trans  &trans       &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans   &kp F20  &kp F7
-                             &trans  &trans  &trans    &trans  &trans  &trans
-            >;
-        };
 
-        Gaming {
-            display-name = "Game";
-            bindings = <
-            &kp Z           &kp X  &kp C      &kp V         &sl 5     &trans  &trans  &trans  &trans  &trans
-            &kp TAB         &kp Q  &kp W      &kp E         &kp R     &trans  &trans  &trans  &trans  &trans
-&kp ESCAPE  &kp LEFT_SHIFT  &kp A  &kp S      &kp D         &kp F     &trans  &trans  &trans  &trans  &trans  &trans
-                                   &kp LCTRL  &kp LEFT_ALT  &trans    &trans  &trans  &trans
-            >;
-        };
-
-        Gaming+ {
-            display-name = "Game+";
-            bindings = <
-        &kp F10  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp T     &kp RA(RC(Y))  &kp RA(RC(U))  &trans  &trans  &kp LC(RA(DEL))
-        &kp L    &kp O         &kp Y         &kp K         &kp G     &kp F5         &kp F7         &trans  &trans  &kp F12
-&trans  &to 0    &trans        &trans        &trans        &trans    &trans         &trans         &trans  &trans  &kp F22          &kp LA(F4)
-                               &kp J         &kp I         &kp M     &trans         &trans         &trans
-            >;
-        };
     };
 };
