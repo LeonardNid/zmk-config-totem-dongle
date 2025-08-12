@@ -58,11 +58,11 @@
  * │     │     │     │     │     │  [  │  ]  │  |  │  {  │  }  │     │     │
  * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
  */
-#define QZ_LEFT_BRACKET  LA(N5) // [
-#define QZ_RIGHT_BRACKET LA(N6) // ]
-#define QZ_PIPE          LA(N7) // |
-#define QZ_LEFT_BRACE    LA(N8) // {
-#define QZ_RIGHT_BRACE   LA(N9) // }
+#define QZ_LEFT_BRACKET  LC(LA(N8)) // [
+#define QZ_RIGHT_BRACKET LC(LA(N9)) // ]
+#define QZ_PIPE          LC(LA(NUBS)) // |
+#define QZ_LEFT_BRACE    LC(LA(N7)) // {
+#define QZ_RIGHT_BRACE   RA(N0) // }
 
 /*
  * Alt shifted number row
@@ -70,8 +70,8 @@
  * │     │     │     │     │     │     │  ^  │  \  │     │     │     │     │
  * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
  */
-#define QZ_BACKSLASH         LS(LA(N7)) /* \ */
-#define QZ_CARET             LS(LA(N6)) // ^
+#define QZ_BACKSLASH         LC(LA(MINUS)) /* \ */
+#define QZ_CARET             GRAVE // ^
 
 /*
  * Q row
@@ -98,7 +98,7 @@
  * │     │     │     │     │     │     │     │     │     │     │     │  *  │  '  |
  * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
  */
-#define QZ_ASTERISK     LS(BACKSLASH) // *
+#define QZ_ASTERISK     LS(RIGHT_BRACKET) // *
 #define QZ_SINGLE_QUOTE LS(BACKSLASH) // '
 
 /*
@@ -107,7 +107,7 @@
  * │     │     │  €  │     │     │     │     │     │     │     │     │     │     |
  * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
  */
-#define QZ_EURO LA(E) // €
+#define QZ_EURO LC(LA(E)) // €
 
 /*
  * A row
@@ -134,7 +134,7 @@
  * │     │     │     │     │     │     │     │     │  @  │     │     │     │     |
  * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
  */
-#define QZ_AT LA(L) // @
+#define QZ_AT LC(LA(Q)) // @
 
 /*
  * Bottom row
@@ -143,6 +143,7 @@
  * └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
  */
 #define QZ_GT        NUBS      // <
+#define QZ_LW        LS(NUBS)     // >
 #define QZ_Y         Z      
 #define QZ_X         X
 #define QZ_C         C
@@ -157,7 +158,7 @@
 #define QZ_SEMICOLON LS(COMMA) // ;
 
 #define QZ_UNDER LS(QZ_MINUS)
-#define QZ_TILDE LA(N)
+#define QZ_TILDE LC(LA(RIGHT_BRACKET))
 
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 
@@ -167,9 +168,10 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 
-#define DEF        0
+
+#define DEF         0
 #define SYM         1
-#define SYM2        2
+#define SYMM        2
 #define NAV         3
 
 
@@ -204,49 +206,79 @@
 
     combos {
         compatible = "zmk,combos";
+        combo_del {
+            timeout-ms = <50>;
+            key-positions = <23 24>;
+            layers = <0>;
+            bindings = <&kp DEL>;
+        };
+        combo_de_eszett {
+            timeout-ms = <50>;
+            key-positions = <27 28>;
+            layers = <0>;
+            bindings = <&kp QZ_SZ>;
+        };
+
     };
 
     keymap {
         compatible = "zmk,keymap";
 
-        DEF {
+        DEF {            // neo
             label = "DEF";
             bindings = <
-                    &kp Q           &kp W          &kp E          &kp R           &kp T      /**/    &kp QZ_Y    &kp U        &kp I         &kp O       &kp P
-                    &kp QZ_PERCENT  &hm LALT S     &hm LCTRL D    &hm LSHIFT F    &kp G      /**/    &kp H       &hm RSHFT J  &hm RCTRL K   &hm RALT L  &hm RGUI QZ_DOT
-    &lt 3 ESCAPE    &kp QZ_Z        &kp X          &kp C          &kp V           &kp B      /**/    &kp N       &kp M        &kp QZ_AE     &kp QZ_OE   &kp QZ_UE        &kp COMMA
-                                               &kp TAB        &kp ENTER       &kp SPACE  /**/    &kp BSPC    &to SYM      &to NAV
+                    &kp X           &kp V          &kp L          &kp C           &kp W      /**/    &kp K       &kp H        &kp G         &kp F       &kp Q
+                    &hm LGUI U      &hm LALT I     &hm LCTRL A    &hm LSHIFT E    &kp O      /**/    &kp S       &hm RSHFT N  &hm RCTRL R   &hm RALT T  &hm RGUI D
+    &kp ESCAPE      &kp  QZ_UE      &kp QZ_OE      &kp QZ_AE      &kp P           &kp QZ_Z   /**/    &kp B       &kp M        &kp QZ_COMMA  &kp QZ_DOT  &kp J        &kp QZ_Y 
+                                                   &kp TAB        &kp ENTER       &kp SPACE  /**/    &kp BSPC    &to SYM      &to NAV
             >;
         };
 
+
+    //     DEF {           // qwertz
+    //         label = "DEF";
+    //         bindings = <
+    //                 &kp Q           &kp W          &kp E          &kp R           &kp T      /**/    &kp QZ_Z    &kp U        &kp I         &kp O       &kp P
+    //                 &hm LGUI A      &hm LALT S     &hm LCTRL D    &hm LSHIFT F    &kp G      /**/    &kp H       &hm RSHFT J  &hm RCTRL K   &hm RALT L  &hm RGUI QZ_DOT
+    // &kp ESCAPE      &kp QZ_Y        &kp X          &kp C          &kp V           &kp B      /**/    &kp N       &kp M        &kp QZ_AE     &kp QZ_OE   &kp QZ_UE        &kp COMMA
+    //                                                &kp TAB        &kp ENTER       &kp SPACE  /**/    &kp BSPC    &to SYM      &to NAV
+    //         >;
+    //     };
+
+    
         SYM {
             label = "SYM";
             bindings = <
-                    &kp Q       &kp QZ_DOUBLE_QUOTES          &kp E          &kp R           &kp QZ_EXCLAMATION      /**/    &kp QZ_Y    &kp U        &kp I         &kp O       &kp P
-                    &hm LGUI A  &hm LALT S                    &hm LCTRL D    &hm LSHIFT F    &kp G                   /**/    &kp H       &hm RSHFT J  &hm RCTRL K   &hm RALT L  &hm RGUI QZ_DOT
-    &lt 3 ESCAPE    &kp QZ_USD  &kp X                         &kp C          &kp V           &kp B                   /**/    &kp N       &kp M        &kp QZ_AE     &kp QZ_OE   &kp QZ_UE        &kp COMMA
-                                                              &kp TAB        &kp ENTER       &kp SPACE               /**/    &kp BSPC    &to SYM      &to NAV
+                    &kp QZ_TILDE        &kp QZ_DOUBLE_QUOTES    &kp QZ_LEFT_BRACE           &kp QZ_RIGHT_BRACE              &kp QZ_EXCLAMATION      /**/    &kp QZ_PLUS  &kp N7         &kp N8        &kp N9        &kp QZ_ASTERISK
+                    &hm LGUI QZ_PERCENT &hm LALT QZ_SLASH       &hm LCTRL QZ_LEFT_BRACKET   &hm LSHIFT QZ_RIGHT_BRACKET     &kp QZ_QMARK            /**/    &kp QZ_MINUS &hm RSHFT N4   &hm RCTRL N5  &hm RALT N6   &hm RGUI QZ_COLON
+    &kp QZ_GRAVE    &kp QZ_USD          &kp QZ_HASH             &kp QZ_LEFT_PARENTHESIS     &kp QZ_RIGHT_PARENTHESIS        &kp QZ_AMPERSAND        /**/    &kp N0       &kp N1         &kp N2        &kp N3        &kp QZ_EQUAL      &kp QZ_SEMICOLON
+                                                                                                         &trans         &mo SYMM      &to DEF       /**/    &kp BSPC     &mo SYMM    &to NAV
+
             >;
         };
 
-        SYM2 {
-            label = "SYM2";
+        SYMM {
+            label = "SYMM";
             bindings = <
-                   &kp Q       &kp W          &kp E         &kp R      &kp T    &kp Y        &kp U        &kp I       &kp O               &kp P
-              &hm LGUI A  &hm LALT S    &hm LCTRL D  &hm LSHIFT F      &kp G    &kp H  &hm RSHFT J  &hm RCTRL K  &hm RALT L  &hm RGUI SEMICOLON
-&lt 3 ESCAPE       &kp Z       &kp X          &kp C         &kp V      &kp B    &kp N        &kp M    &kp COMMA     &kp DOT           &kp SLASH  &lt 4 APOSTROPHE
-                                      &mt LCTRL DEL     &lt 1 TAB  &kp SPACE  &kp RET   &lt 2 BSPC    &kp MINUS
+                    &trans        &trans             &trans         &trans      &trans       /**/     &trans        &kp F9  &kp F10  &kp F11 &kp F12 
+                    &kp QZ_CARET  &kp QZ_BACKSLASH   &kp QZ_GT      &kp QZ_LW   &kp QZ_PIPE  /**/     &kp QZ_UNDER  &kp F5  &kp F6   &kp F7  &kp F8
+&kp QZ_SINGLE_QUOTE &kp QZ_EURO   &kp QZ_AT          &trans         &trans      &trans       /**/     &trans        &kp F1  &kp F2   &kp F3  &kp F4  &trans
+                                                     &trans         &trans      &trans       /**/     &trans        &trans  &trans
+
             >;
         };
 
         Nav {
             label = "Nav";
             bindings = <
-                      &trans       &trans  &kp UP_ARROW     &trans  &kp LBRC  &kp RBRC  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9         &kp PLUS
-              &kp LEFT_SHIFT     &kp LEFT      &kp DOWN  &kp RIGHT  &kp LBKT  &kp RBKT  &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6        &kp MINUS
-&kp LEFT_ALT          &trans  &kp PAGE_UP        &trans  &kp PG_DN  &kp LPAR  &kp RPAR  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp KP_MULTIPLY  &trans
-                                                 &trans     &trans    &trans    &trans        &trans  &kp NUMBER_0
+                    &trans      &trans     &kp HOME           &kp PAGE_UP             &kp F23    /**/     &kp C_VOL_UP  &kp C_PREV  &kp C_PP  &kp C_NEXT &trans 
+                    &trans      &trans     &hm LCTRL END      &hm LSHIFT PAGE_DOWN    &kp F22    /**/     &kp C_VOL_DN  &kp LEFT    &kp UP    &kp RIGHT  &trans
+        &trans      &trans      &trans     &kp F19            &kp F20                 &kp F21    /**/     &kp F24       &kp F       &kp DOWN  &trans     &trans  &trans
+                                           &trans             &kp LC(QZ_DOT)          &to DEF    /**/     &kp SPACE     &to SYM     &kp RCTRL
             >;
         };
+
+
+
     };
 };
