@@ -223,7 +223,7 @@
             key-positions = <13 16>;
             layers = <0>;
             bindings = <&kp CAPS>;
-        }
+        };
     };
 
     keymap {
@@ -257,7 +257,7 @@
                     &kp QZ_TILDE        &kp QZ_DOUBLE_QUOTES    &kp QZ_LEFT_BRACE           &kp QZ_RIGHT_BRACE              &kp QZ_EXCLAMATION      /**/    &kp QZ_PLUS  &kp N7         &kp N8        &kp N9        &kp QZ_ASTERISK
                     &hm LGUI QZ_PERCENT &hm LALT QZ_SLASH       &hm LCTRL QZ_LEFT_BRACKET   &hm LSHIFT QZ_RIGHT_BRACKET     &kp QZ_QMARK            /**/    &kp QZ_MINUS &hm RSHFT N4   &hm RCTRL N5  &hm RALT N6   &hm RGUI QZ_COLON
     &kp QZ_GRAVE    &kp QZ_USD          &kp QZ_HASH             &kp QZ_LEFT_PARENTHESIS     &kp QZ_RIGHT_PARENTHESIS        &kp QZ_AMPERSAND        /**/    &kp N0       &kp N1         &kp N2        &kp N3        &kp QZ_EQUAL      &kp QZ_SEMICOLON
-                                                                                                         &trans         &mo SYMM      &to DEF       /**/    &kp BSPC     &mo SYMM    &to NAV
+                                                                                                         &mo SYMM         &trans      &to DEF       /**/    &trans       &mo SYMM       &trans
 
             >;
         };
