@@ -247,7 +247,7 @@
                     &kp X           &kp V          &kp L          &kp C           &kp W      /**/    &kp K       &kp H        &kp G         &kp F       &kp Q
                     &hm LGUI U      &hm LALT I     &hm LCTRL A    &hm LSHIFT E    &kp O      /**/    &kp S       &hm RSHFT N  &hm RCTRL R   &hm RALT T  &hm RGUI D
     &kp ESCAPE      &kp  QZ_UE      &kp QZ_OE      &kp QZ_AE      &kp P           &kp QZ_Z   /**/    &kp B       &kp M        &kp QZ_COMMA  &kp QZ_DOT  &kp J        &kp QZ_Y 
-                                                   &kp TAB        MO_TO(NAV)         &kp SPACE  /**/    &kp BSPC    &to SYM      &kp ENTER 
+                                                   &kp TAB        MO_TO(NAV)      &kp SPACE  /**/    &kp BSPC    MO_TO(SYM)   &kp ENTER 
             >;
         };
 
@@ -266,10 +266,10 @@
         SYM {
             label = "SYM";
             bindings = <
-                    &kp QZ_TILDE        &kp QZ_DOUBLE_QUOTES    &kp QZ_LEFT_BRACE           &kp QZ_RIGHT_BRACE              &kp QZ_EXCLAMATION      /**/    &kp QZ_PLUS  &kp N7         &kp N8        &kp N9        &kp QZ_ASTERISK
-                    &hm LGUI QZ_PERCENT &hm LALT QZ_SLASH       &hm LCTRL QZ_LEFT_BRACKET   &hm LSHIFT QZ_RIGHT_BRACKET     &kp QZ_QMARK            /**/    &kp QZ_MINUS &hm RSHFT N4   &hm RCTRL N5  &hm RALT N6   &hm RGUI QZ_COLON
-    &kp QZ_GRAVE    &kp QZ_USD          &kp QZ_HASH             &kp QZ_LEFT_PARENTHESIS     &kp QZ_RIGHT_PARENTHESIS        &kp QZ_AMPERSAND        /**/    &kp N0       &kp N1         &kp N2        &kp N3        &kp QZ_EQUAL      &kp QZ_SEMICOLON
-                                                                                                         &mo SYMM         &trans      &to DEF       /**/    &trans       &mo SYMM       &trans
+                    &kp QZ_AT             &kp QZ_LEFT_BRACE         &kp QZ_EXCLAMATION   &kp QZ_RIGHT_BRACE             &kp QZ_PERCENT         /**/    &kp QZ_PLUS   &kp N7         &kp N8        &kp N9        &kp QZ_ASTERISK
+                    &hm LGUI QZ_BACKSLASH &hm LALT QZ_LEFT_BRACKET  &hm LCTRL QZ_QMARK   &hm LSHIFT QZ_RIGHT_BRACKET    &kp QZ_DOUBLE_QUOTES   /**/    &kp N0        &hm RSHFT N4   &hm RCTRL N5  &hm RALT N6   &hm RGUI QZ_SLASH
+    &kp QZ_GRAVE    &kp QZ_USD            &kp QZ_LEFT_PARENTHESIS   &kp QZ_AMPERSAND     &kp QZ_RIGHT_PARENTHESIS       &kp QZ_HASH            /**/    &kp QZ_EQUAL  &kp N1         &kp N2        &kp N3        &kp QZ_MINUS      &kp QZ_UNDER
+                                                                                                    &mo SYMM         &trans      &to DEF       /**/    &trans       &mo SYMM       &trans
 
             >;
         };
@@ -277,10 +277,10 @@
         SYMM {
             label = "SYMM";
             bindings = <
-                    &trans        &trans             &trans         &trans      &trans       /**/     &trans        &kp F9  &kp F10  &kp F11 &kp F12 
-                    &kp QZ_CARET  &kp QZ_BACKSLASH   &kp QZ_GT      &kp QZ_LW   &kp QZ_PIPE  /**/     &kp QZ_UNDER  &kp F5  &kp F6   &kp F7  &kp F8
-&kp QZ_SINGLE_QUOTE &kp QZ_EURO   &kp QZ_AT          &trans         &trans      &trans       /**/     &trans        &kp F1  &kp F2   &kp F3  &kp F4  &trans
-                                                     &trans         &trans      &trans       /**/     &trans        &trans  &trans
+                    &trans             &trans              &trans             &trans             &trans       /**/     &trans  &kp F9  &kp F10  &kp F11 &kp F12 
+                    &hm LGUI QZ_TILDE  &hm LALT QZ_CARET   &hm LCTRL QZ_GT    &hm LSHIFT QZ_LW   &kp QZ_PIPE  /**/     &trans  &kp F5  &kp F6   &kp F7  &kp F8
+&kp QZ_SINGLE_QUOTE &kp QZ_EURO        &trans              &trans             &trans             &trans       /**/     &trans  &kp F1  &kp F2   &kp F3  &kp F4  &trans
+                                                                      &trans         &trans      &trans       /**/     &trans  &trans  &trans
 
             >;
         };
