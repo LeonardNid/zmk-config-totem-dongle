@@ -172,7 +172,7 @@
 #define DEF         0
 #define SYM         1
 #define SYMM        2
-#define nav         3
+#define NAV         3
 
 
 &mt {
