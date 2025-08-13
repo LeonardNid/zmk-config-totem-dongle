@@ -188,6 +188,10 @@
     quick-tap-ms = <150>;
 };
 
+
+
+#define MO_TO(layer) &mo_to layer layer
+
 / {
     behaviors {
         hm: homerow_mods {
@@ -201,6 +205,14 @@
             bindings =
                 <&kp>,
                 <&kp>;
+        };
+
+        mo_to: move_toggle_layer {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&mo>, <&to>;
         };
     };
 
@@ -235,7 +247,7 @@
                     &kp X           &kp V          &kp L          &kp C           &kp W      /**/    &kp K       &kp H        &kp G         &kp F       &kp Q
                     &hm LGUI U      &hm LALT I     &hm LCTRL A    &hm LSHIFT E    &kp O      /**/    &kp S       &hm RSHFT N  &hm RCTRL R   &hm RALT T  &hm RGUI D
     &kp ESCAPE      &kp  QZ_UE      &kp QZ_OE      &kp QZ_AE      &kp P           &kp QZ_Z   /**/    &kp B       &kp M        &kp QZ_COMMA  &kp QZ_DOT  &kp J        &kp QZ_Y 
-                                                   &kp TAB        &to NAV         &kp SPACE  /**/    &kp BSPC    &to SYM      &kp ENTER 
+                                                   &kp TAB        MO_TO(NAV)         &kp SPACE  /**/    &kp BSPC    &to SYM      &kp ENTER 
             >;
         };
 
